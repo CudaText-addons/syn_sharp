@@ -1,0 +1,13 @@
+SynSharp version history
+-----------------------
+
+1.1.0
++ added readme info about user solution-files. Must know.
++ added find-id functionality. Note: needs additional line in SynPlugins.ini.
+
+1.0.3
+- unneeded bat files deleted
+- faster reading of big files
+
+1.0.1 (dec 2013)
+initial ver
