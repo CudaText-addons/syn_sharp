@@ -5,7 +5,7 @@ interface
 type
   TExecCode = (exOk, exCannotRun, exExcept);
 
-function FExecAsAdmin(const Cmd, Params, Dir: string; ShowMode: Integer): boolean;
+function FExecAsAdmin(const Cmd, Params, Dir: string; ShowMode: Integer; AsAdmin: boolean): boolean;
 function FGetFileSize(const FileName: WideString): Int64; overload;
 
 function IsWordChar(C: Widechar): boolean;
@@ -220,13 +220,18 @@ begin
   end;
 end;
 
-function FExecAsAdmin(const Cmd, Params, Dir: string; ShowMode: Integer): boolean;
+function FExecAsAdmin(const Cmd, Params, Dir: string; ShowMode: Integer; AsAdmin: boolean): boolean;
 var
   Verb: string;
 begin
-  //Vista? then "runas"
-  if Win32MajorVersion >= 6 then
-    Verb:= 'runas'
+  if AsAdmin then
+  begin
+    //Vista? then "runas"
+    if Win32MajorVersion >= 6 then
+      Verb:= 'runas'
+    else
+      Verb:= 'open';
+  end
   else
     Verb:= 'open';
   Result:= ShellExecute(0, PChar(Verb), PChar(Cmd), PChar(Params), PChar(Dir), ShowMode) > 32;
